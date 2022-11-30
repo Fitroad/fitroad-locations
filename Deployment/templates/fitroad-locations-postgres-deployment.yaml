@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.pgfl_metadata.deployment_name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Values.pgfl_metadata.app_name }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.pgfl_metadata.app_name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.pgfl_metadata.app_name }}
+    spec:
+      containers:
+        - name: {{ .Values.pgfl_metadata.app_name }}
+          image: {{ .Values.pgfl_metadata.image }}
+          ports:
+            - containerPort: {{ .Values.pgfl_metadata.service.port }}
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.pgfl_metadata.secret_name }}
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.pgfl_metadata.secret_name }}
+                  key: POSTGRES_PASSWORD
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.pgfl_metadata.configmap_name }}
+                  key: POSTGRES_DB
+          volumeMounts:
+            - mountPath: {{ .Values.pgfl_metadata.volume }}
+              name: {{ .Values.pgfl_metadata.pv_name }}
+      volumes:
+        - name: {{ .Values.pgfl_metadata.pv_name }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.pgfl_metadata.pvc_name }}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.pgfl_metadata.service_name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    app: {{ .Values.pgfl_metadata.app_name }}
+  ports:
+    - protocol: TCP
+      port: {{ .Values.pgfl_metadata.service.port }}
+      targetPort: {{ .Values.pgfl_metadata.service.target_port }}

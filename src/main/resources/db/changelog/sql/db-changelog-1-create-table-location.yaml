@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: "1"
+      author: "Dragosh Sergey. 13.05.2022"
+      changes:
+        - createTable:
+            tableName: locations
+            columns:
+              - column:
+                  name: id
+                  type: BIGSERIAL
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_locations_id
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    notNullConstraintName: nn_locations_name
+              - column:
+                  name: latitude
+                  type: real
+                  constraints:
+                    nullable: false
+                    notNullConstraintName: nn_locations_latitude
+              - column:
+                  name: longitude
+                  type: real
+                  constraints:
+                    nullable: false
+                    notNullConstraintName: nn_locations_longitude

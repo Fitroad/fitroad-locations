@@ -1,0 +1,38 @@
+fl_metadata:
+  replicas: 2
+  deployment_name: fitroad-locations-deployment
+  service_name: fitroad-locations-service
+  configmap_name: fitroad-locations-configmap
+  secret_name: fitroad-locations-secret
+  app_name: fitroad-locations
+
+pgfl_metadata:
+  deployment_name: fitroad-locations-postgres-deployment
+  service_name: fitroad-locations-postgres-service
+  configmap_name: fitroad-locations-postgres-configmap
+  secret_name: fitroad-locations-postgres-secret
+  pvc_name: fitroad-locations-pvc
+  pv_name: fitroad-locations-pv
+  capacity: 1Gi
+  path: "/tmp/docker/volumes/frlocs/"
+  app_name: fitroad-locations-postgres
+  volume: "/var/lib/postgresql/data"
+  image: postgres:14.2
+  service:
+    port: 5432
+    target_port: 5432
+
+fl_env:
+#  DB_URL:
+#  DB_URL: jdbc:postgresql://10.99.105.220:5432/locations
+
+fl_secret:
+  db_user: cm9vdAo=
+  db_password: cm9vdAo=
+
+pgfl_env:
+  db_database: locations
+
+pgfl_secret:
+  postgres_user: cm9vdAo=
+  postgres_password: cm9vdAo=

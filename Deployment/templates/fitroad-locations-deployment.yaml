@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.fl_metadata.deployment_name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Values.fl_metadata.app_name }}
+spec:
+  replicas: {{ .Values.fl_metadata.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.fl_metadata.app_name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.fl_metadata.app_name }}
+    spec:
+      containers:
+        - name: {{ .Values.fl_metadata.app_name }}
+          image: local/fitroad-locations:1.0.0
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          env:
+            - name: FITROAD_LOCATIONS_DB_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ .Values.fl_metadata.configmap_name }}
+                  key: FITROAD_LOCATIONS_DB_URL
+            - name: FITROAD_LOCATIONS_DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.fl_metadata.secret_name }}
+                  key: FITROAD_LOCATIONS_DB_USERNAME
+            - name: FITROAD_LOCATIONS_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.fl_metadata.secret_name }}
+                  key: FITROAD_LOCATIONS_DB_PASSWORD
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.fl_metadata.service_name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    app: {{ .Values.fl_metadata.app_name }}
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 30301

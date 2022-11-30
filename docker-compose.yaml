@@ -1,0 +1,38 @@
+version: '3'
+services:
+  postgres-fitroad-locations:
+    container_name: postgres-fitroad-locations
+    image: postgres:14.2
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=locations
+    networks:
+      - fitroad-storage-network
+    volumes:
+    - /tmp/docker/volumes/frlocs:/var/lib/postgresql/data
+  fitroad-locations:
+    container_name: fitroad-locations
+    image: fitroad-locations:1.0.0
+    ports:
+      - 8080:8080
+    environment:
+      - FITROAD_LOCATIONS_DB_URL=jdbc:postgresql://postgres-fitroad-locations:5432/locations
+      - FITROAD_LOCATIONS_DB_USERNAME=root
+      - FITROAD_LOCATIONS_DB_PASSWORD=root
+    networks:
+      - fitroad-storage-network
+networks:
+  fitroad-storage-network:
+    name: fitroad-storage-network
+    driver: bridge
+
+volumes:
+  postgres-fitroad-locs-volume:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/tmp/docker/volumes/frlocs'

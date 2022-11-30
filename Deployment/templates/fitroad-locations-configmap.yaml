@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.fl_metadata.configmap_name }}
+  namespace: {{ .Release.Namespace }}
+data:
+  FITROAD_LOCATIONS_DB_URL:  jdbc:postgresql://{{ .Values.pgfl_metadata.service_name }}:{{ .Values.pgfl_metadata.service.port }}/{{ .Values.pgfl_env.db_database }}

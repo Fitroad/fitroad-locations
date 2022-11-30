@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.pgfl_metadata.configmap_name }}
+  namespace: {{ .Release.Namespace }}
+data:
+  POSTGRES_DB: {{ .Values.pgfl_env.db_database }}

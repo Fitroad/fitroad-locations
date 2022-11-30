@@ -1,0 +1,24 @@
+application:
+  cors:
+    allowed-methods: GET, POST, PUT, DELETE
+    allowed-headers:
+    allowed-origins: 127.0.0.1
+
+datasource:
+  stub:
+    enabled: false
+  postgres:
+    driver: org.postgresql.Driver
+    url: ${FITROAD_LOCATIONS_DB_URL}
+    username: ${FITROAD_LOCATIONS_DB_USERNAME}
+    password: ${FITROAD_LOCATIONS_DB_PASSWORD}
+    hikari:
+      connectionTimeout: 10
+      initFailTimeout: 60
+      maximumPoolSize: 4
+    liquibase:
+      changelog: classpath:/db/changelog/db-changelog-root.yaml
+
+springdoc:
+  swagger-ui:
+    path: /swagger.html
