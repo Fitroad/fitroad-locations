@@ -1,10 +1,12 @@
 package com.fitroad.locations.location.api;
 
 import com.fitroad.locations.location.BaseLocationRequest;
-import org.springframework.http.ResponseEntity;
+
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 public interface LocationApi {
-    ResponseEntity<?> save(BaseLocationRequest baseLocation);
-    ResponseEntity<?> getLocationByName(String name);
-    ResponseEntity<?> getLocations();
+    Mono<Void> save(Mono<BaseLocationRequest> baseLocation);
+    Mono<?> getLocationByName(Mono<String> name);
+    Flux<?> getLocations();
 }

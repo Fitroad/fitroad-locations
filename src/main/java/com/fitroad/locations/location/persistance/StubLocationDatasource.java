@@ -26,11 +26,11 @@ public class StubLocationDatasource implements LocationDatasource {
     }
 
     @Override
-    public Mono<BaseLocation> getLocationByName(String name) {
+    public Mono<BaseLocation> getLocationByName(String title) {
         Optional<BaseLocation> first = LOCATIONS_MAP.values().stream()
-                .filter(loc -> loc.getName().equals(name))
+                .filter(loc -> loc.getTitle().equals(title))
                 .findFirst();
-        return Mono.just(first.orElseThrow(() -> new RuntimeException(String.format("Unable to find location with the name %s", name))));
+        return Mono.just(first.orElseThrow(() -> new RuntimeException(String.format("Unable to find location with the name %s", title))));
     }
 
     @Override
