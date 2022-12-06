@@ -11,7 +11,7 @@ public class BaseLocation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    private String title;
     private Float latitude;
     private Float longitude;
 
@@ -19,15 +19,15 @@ public class BaseLocation {
 
     }
 
-    public BaseLocation(String name, Float latitude, Float longitude) {
-        this.name = name;
+    public BaseLocation(String title, Float latitude, Float longitude) {
+        this.title = title;
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
     public BaseLocation(Long id, String name, Float latitude, Float longitude) {
         this.id = id;
-        this.name = name;
+        this.title = name;
         this.latitude = latitude;
         this.longitude = longitude;
     }
@@ -35,7 +35,7 @@ public class BaseLocation {
     public BaseResponse buildBaseLocationResponse() {
         return new BaseLocationResponse(
                 id,
-                name,
+                title,
                 latitude,
                 longitude
         );
@@ -50,12 +50,12 @@ public class BaseLocation {
         return this;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public BaseLocation setName(String name) {
-        this.name = name;
+    public BaseLocation setTitle(String title) {
+        this.title = title;
         return this;
     }
 
@@ -89,21 +89,21 @@ public class BaseLocation {
             return false;
         }
         BaseLocation location = (BaseLocation) obj;
-        return  location.getName().equals(name) &&
+        return  location.getTitle().equals(title) &&
                 location.getLatitude().equals(latitude) &&
                 location.getLongitude().equals(longitude);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, latitude, longitude);
+        return Objects.hash(title, latitude, longitude);
     }
 
     @Override
     public String toString() {
         return "BaseLocation{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", title='" + title + '\'' +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 '}';

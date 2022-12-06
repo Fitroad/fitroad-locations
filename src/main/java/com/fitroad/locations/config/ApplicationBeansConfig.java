@@ -1,6 +1,5 @@
 package com.fitroad.locations.config;
 
-import com.fitroad.locations.location.api.rest.v1.LocationServiceGateway;
 import com.fitroad.locations.location.persistance.LocationDatasource;
 import com.fitroad.locations.location.persistance.PostgresLocationDatasource;
 import com.fitroad.locations.location.persistance.StubLocationDatasource;
@@ -28,10 +27,5 @@ public class ApplicationBeansConfig {
     @Bean
     public LocationService locationService(LocationDatasource datasource) {
         return new LocationService(datasource);
-    }
-
-    @Bean
-    public LocationServiceGateway locationServiceGateway(LocationService service) {
-        return new LocationServiceGateway(service);
     }
 }

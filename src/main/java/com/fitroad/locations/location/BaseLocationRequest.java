@@ -3,7 +3,7 @@ package com.fitroad.locations.location;
 import java.util.Objects;
 
 public class BaseLocationRequest {
-    private String name;
+    private String title;
     private Float latitude;
     private Float longitude;
 
@@ -13,24 +13,24 @@ public class BaseLocationRequest {
 
     public BaseLocation buildBaseLocation() {
         return new BaseLocation(
-                name,
+                title,
                 latitude,
                 longitude
         );
     }
 
     public BaseLocationRequest(String name, Float latitude, Float longitude) {
-        this.name = name;
+        this.title = name;
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public BaseLocationRequest setName(String name) {
-        this.name = name;
+    public BaseLocationRequest setTitle(String name) {
+        this.title = name;
         return this;
     }
 
@@ -64,20 +64,20 @@ public class BaseLocationRequest {
             return false;
         }
         BaseLocation location = (BaseLocation) obj;
-        return  location.getName().equals(name) &&
+        return  location.getTitle().equals(title) &&
                 location.getLatitude().equals(latitude) &&
                 location.getLongitude().equals(longitude);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, latitude, longitude);
+        return Objects.hash(title, latitude, longitude);
     }
 
     @Override
     public String toString() {
         return "BaseLocation{" +
-                "name='" + name + '\'' +
+                "title='" + title + '\'' +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 '}';
